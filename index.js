@@ -31,12 +31,12 @@
 
 const PORT = process.env.PORT || 3001
 const { db } = require('./src/db.js')
-const server = require('./src/app');
+const server = require('./src/app.js');
 
-db.sync({ force: true }).then(() => {
+
+db.sync({ force: false }).then(() => {
     console.log('Database connected')
-    server.listen(PORT, async () => {
+    server.listen(PORT, () => {
         console.log(`Listening at port ${PORT}`)
     })
-
-})
+}).catch(error => console.error(error))
