@@ -1,8 +1,10 @@
 const { Router } = require('express');
-const getTest = require("./character-routes/index.routes");
+const auth = require("./auth-routes/index.js");
+const getAllUsers = require("./user-routes/getUsers.routes.js");
 
 const router = Router();
 
-router.use('/test', getTest)
+router.use('/auth', auth)
+router.use('/users', getAllUsers);
 
 module.exports = router;

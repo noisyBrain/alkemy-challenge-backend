@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const fs = require("fs");
 const path = require("path");
 
@@ -53,5 +53,6 @@ Genre.belongsToMany(Movie, { through: "Movie_Genre" })
 module.exports = {
     ...sequelize.models,
     db: sequelize,
+    Op,
 }
     

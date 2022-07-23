@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize) => {
     sequelize.define(
         "User",
@@ -26,6 +28,7 @@ module.exports = (sequelize) => {
             },
             email: {
                 type: DataTypes.STRING,
+                unique: true,
             },
             password: {
                 type: DataTypes.STRING,
@@ -35,7 +38,20 @@ module.exports = (sequelize) => {
             },
         },
         {
+            hooks: {
+                beforeCreate: async (user) => {
+                    if (user.password) {
+                        const salt = await bcrypt.genSalt(10)
+                        user.password = await bcrypt.hash(user.password, salt)
+                    }
+                }
+            },
+            instanceMethods: {
+                validPassword: (password) => {
+                    return bcrypt.compareSync(password, this.password);
+                }
+            },
             timestamps: false
-        }
+        },
     )
 };

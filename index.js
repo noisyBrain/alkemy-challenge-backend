@@ -34,7 +34,7 @@ const { db } = require('./src/db.js')
 const server = require('./src/app.js');
 
 
-db.sync({ force: false }).then(() => {
+db.sync({ force: true }).then(() => {
     console.log('Database connected')
     server.listen(PORT, () => {
         console.log(`Listening at port ${PORT}`)
