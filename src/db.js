@@ -2,6 +2,8 @@ require('dotenv').config();
 const { Sequelize, Op } = require('sequelize');
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require('bcrypt');
+
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
@@ -42,7 +44,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Character, Genre, Movie } = sequelize.models
+const { Character, Genre, Movie, User } = sequelize.models
+
+User.prototype.validatePassword = async function(password) {
+  return await bcrypt.compare(password, this.password)
+}
+
 
 Character.belongsToMany(Movie, { through: "Character_Movie" })
 Movie.belongsToMany(Character, { through: "Character_Movie" })

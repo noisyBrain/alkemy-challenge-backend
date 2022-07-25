@@ -1,8 +1,7 @@
-const { Op } = require('../../db');
-const { User } = require('../../db');
+const { Op, User } = require('../../db');
 
-const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
 const register = async (req, res, next) => {
 
@@ -12,7 +11,7 @@ const register = async (req, res, next) => {
             return res.json({ msg: "Some fields are required" })
         }
         // check valid email
-        if (!validator.isEmail(email)) throw Error("Email field must be a valid email")
+        if (!validator.isEmail(email)) throw new Error("Email field must be a valid email")
         // strongPassword default = minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1 and minSymbols: 1
         if (!validator.isStrongPassword(password)) throw Error("Password too weak")
         const exists = await User.findOne({
@@ -23,7 +22,7 @@ const register = async (req, res, next) => {
                 ]
             }
         });
-        if (exists) throw Error("Email or username already exists")
+        if (exists) throw new Error("Email or username already exists")
         const user = await User.create({
             firstName,
             lastName,
@@ -31,18 +30,19 @@ const register = async (req, res, next) => {
             email,
             password
         })
-        user.save()
+        const savedUser = await user.save()
+        // create a token and send it to the header
         const token = jwt.sign(
             {
-                id: user.id,
-                firstName: user.firstName,
+                id: savedUser.id,
+                email: savedUser.email,
+                userName: savedUser.userName,
             },
             process.env.SECRET_TOKEN,
-            {
-                expiresIn: 60 * 60
-            }
+            { expiresIn: 60 * 60 }
         )
-        return res.header("authnoseque", token).status(200).json(user)
+        console.log(token)
+        return res.header("authToken", token).status(200).json(user)
 
     } catch (error) {
         next(error)
