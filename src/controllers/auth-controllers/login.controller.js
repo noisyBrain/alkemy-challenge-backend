@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
         SECRET_TOKEN,
         { expiresIn: 60 * 60 }
     )
-    res.header(token).status(200).json({ msg: 'Login successfuly', login: token })
+    res.header(token).status(200).json(token)
     } catch (error) {
         next(error)
     };
