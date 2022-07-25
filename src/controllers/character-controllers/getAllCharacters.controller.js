@@ -3,7 +3,6 @@ const showCharactersService = require('../../services/character-services/getAllC
 const getAllCharactersController = async (req, res, next) => {
     try {
         const allCharacters = await showCharactersService()
-        console.log("allcharacters", allCharacters)
         allCharacters.length < 1
         ? res.status(404).json({ msg: "Characters not found" })
         : res.status(200).json(allCharacters);
