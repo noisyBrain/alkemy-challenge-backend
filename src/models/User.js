@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
     sequelize.define(
-        "User",
+        "user",
         {
             id: {
                 type: DataTypes.UUID,
@@ -39,19 +39,14 @@ module.exports = (sequelize) => {
         },
         {
             hooks: {
-                beforeCreate: async (user) => {
+                beforeCreate: async function (user) {
                     if (user.password) {
                         const salt = await bcrypt.genSalt(10)
                         user.password = await bcrypt.hash(user.password, salt)
                     }
                 }
             },
-            instanceMethods: {
-                validPassword: (password) => {
-                    return bcrypt.compareSync(password, this.password);
-                }
-            },
-            timestamps: false
-        },
+            timestamps: false,
+        }
     )
 };

@@ -2,19 +2,20 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
     sequelize.define(
-        "Character",
+        "character",
         {
             id: {
                 type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4, 
                 validate: {
-                    isUUDV: 4,
+                    isUUID: 4,
                 },
                 primaryKey: true
             },
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                unique: true,
             },
             image: {
                 type: DataTypes.STRING,
@@ -28,11 +29,6 @@ module.exports = (sequelize) => {
             history: {
                 type: DataTypes.TEXT,
             },
-            movies_series: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
-                allowNull: false,
-            },
-
         }
-    )
-}
+    );
+};
