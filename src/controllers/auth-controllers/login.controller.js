@@ -22,8 +22,7 @@ const login = async (req, res, next) => {
         SECRET_TOKEN,
         { expiresIn: 60 * 60 }
     )
-    console.log(token)
-    res.header(token).status(200).json({ msg: 'Login successfuly' })
+    res.header(token).status(200).json({ msg: 'Login successfuly', login: token })
     } catch (error) {
         next(error)
     };
