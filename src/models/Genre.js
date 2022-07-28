@@ -18,6 +18,9 @@ module.exports = (sequelize) => {
             associated_movies_series: {
                 type: DataTypes.ARRAY(DataTypes.STRING)
             }
+        },
+        {
+            timestamps: false,
         }
     );
 };

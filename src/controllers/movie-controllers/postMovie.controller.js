@@ -1,19 +1,10 @@
-const { Character, Movie } = require('../../db');
+const postMovieService = require('../../services/movie-services/postMovie.service');
 
 const postMovieController = async (req, res, next) => {
     try {
-        const newMovie =  await Movie.findOrCreate({
-            where: { title: req.body.title },
-            defaults: {
-                released: req.body.released,
-                rating: req.body.rating,
-            }
-        })
-        // const assoc_chars = await Character.findAll({
-        //     where: { assocciated_characters: req.body.assocciated_characters }
-        // })
-        // newMovie.addCharacter(assoc_chars)
-        res.status(201).json(newMovie)
+        const newMovie = await postMovieService(req)
+        console.log("new Movie en el controller: ", newMovie)
+        res.status(201).json(newMovie);
     } catch (error) {
         next(error)
     };

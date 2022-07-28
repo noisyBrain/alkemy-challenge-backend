@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
             title: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                unique: true,
+            },
+            image: {
+                type: DataTypes.STRING,
             },
             released: {
                 type: DataTypes.DATEONLY,
@@ -26,13 +30,7 @@ module.exports = (sequelize) => {
                     min: 1,
                     max: 5,
                 },
-            },
-            associated_characters: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
             }
         },
-        {
-            timestamps: false
-        }
-    )
-}
+    );
+};

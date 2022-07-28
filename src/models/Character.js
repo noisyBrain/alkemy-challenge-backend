@@ -29,6 +29,6 @@ module.exports = (sequelize) => {
             history: {
                 type: DataTypes.TEXT,
             },
-        }
+        },
     );
 };

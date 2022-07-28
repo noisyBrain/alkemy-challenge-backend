@@ -1,15 +1,19 @@
 const { Character, Movie } = require('../../db');
 
 const putCharacterController = async (req, res, next) => {
-    const { name, weight, age, movies_series, history } = req.body;
+    const { name, weight, age, movies, history } = req.body;
+    const { id } = req.params;
     try {
-        const updatedCharacter =  await Character.update({ 
+        const [_, updatedCharacter] =  await Character.update({ 
+                name,
                 weight,
                 age,
                 history,
-                movies_series
-        }, { where: { name } });
-
+                // movies
+        }, { 
+            returning: true,
+            where: { id: id } 
+        });
         res.status(200).json({ msg: "Character updated" });
     } catch (error) {
         next(error)

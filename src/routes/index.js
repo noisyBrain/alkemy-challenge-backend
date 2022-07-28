@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/auth', auth)
 router.use('/characters', characters);
-router.use('/movie', movies)
+router.use('/movies', movies)
 
 module.exports = router;
