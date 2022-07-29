@@ -6,7 +6,6 @@ module.exports = (sequelize) => {
         {
             id: {
                 type: DataTypes.INTEGER,
-                autoInCrement: true,
                 primaryKey: true,
             },
             name: {
@@ -15,12 +14,6 @@ module.exports = (sequelize) => {
             image: {
                 type: DataTypes.STRING,
             },
-            associated_movies_series: {
-                type: DataTypes.ARRAY(DataTypes.STRING)
-            }
         },
-        {
-            timestamps: false,
-        }
     );
 };

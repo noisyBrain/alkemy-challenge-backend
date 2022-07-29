@@ -1,7 +1,7 @@
-const { Character, Movie } = require('../../db');
+const { Character, Genre, Movie } = require('../../db');
 
 const postMovieService = async (req) => {
-    const { title, image, released, rating, associated_characters } = req.body;
+    const { title, image, released, rating, associated_characters, associated_genres } = req.body;
     try {
         const [newMovie, created] =  await Movie.findOrCreate({
             where: { title },
@@ -11,17 +11,23 @@ const postMovieService = async (req) => {
                 rating,
             },
         });
-        console.log("esto es newMovie => ", newMovie);
+        console.log('destruc de newMovie: ', newMovie)
         if (associated_characters) {
-            const characters = await Character.findAll({
-                where: { name: associated_characters }
-            });
-            console.log("chars después del findAll(): ", characters)
-            console.log(newMovie instanceof Movie)
-            newMovie.addCharacter(characters);
-            console.log("esto newmovie despues del addCharacter", newMovie)
+          const [characters, created] = await Character.findOrCreate({
+            where: { name: associated_characters }
+          });
+          console.log('destruc de characters', characters)
+          newMovie.addCharacter(characters);
         };
-        console.log("esto es newMovie antes de response -> ", newMovie);
+        if (associated_genres) {
+          const [genres, created] = await Genre.findOrCreate({
+            where: { name: associated_genres }
+          });
+          console.log('destruc de genres: ', genres)
+          console.log('genres instacia de Genre? ', genre instanceof Genre)
+          newMovie.addGenre(genres)
+        };
+        console.log('newMovie final: ', newMovie)
         return newMovie;
     } catch (error) {
         return error

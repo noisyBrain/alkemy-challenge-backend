@@ -2,7 +2,7 @@ const { Character, Movie } = require('../../db');
 
 const getDetailMovieService = async (id) => {
     try {
-        const movies = await Movie.findByPk(id, {
+        const movie = await Movie.findByPk(id, {
             include: {
                 model: Character,
                 through: { 
@@ -10,9 +10,13 @@ const getDetailMovieService = async (id) => {
                 },
             },
         })
-        return movies;
+        if (!movie) {
+          movie.error = { msg: "Movie not found" }
+          return movie;
+        };
+        return movie;
     } catch (error) {
-        console.error(error)
+        return error
     };
 };
 

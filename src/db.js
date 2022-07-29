@@ -50,7 +50,6 @@ User.prototype.validatePassword = async function(password) {
   return await bcrypt.compare(password, this.password)
 }
 
-
 Character.belongsToMany(Movie, { through: "Character_Movie" })
 Movie.belongsToMany(Character, { through: "Character_Movie" })
 

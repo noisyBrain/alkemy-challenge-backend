@@ -4,7 +4,7 @@ const getAllMoviesService = async () => {
     try {
         let movies = (await Movie.findAll())
         .map(e => e.toJSON());
-        console.log("movies completo ", movies)
+        console.log(movies)
         movies = movies?.map(movie => ({
             title: movie?.title,
             image: movie?.image,
