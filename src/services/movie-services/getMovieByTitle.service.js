@@ -1,24 +1,19 @@
-const { Character, Movie, Op } = require('../../db');
+const { Character, Genre, Movie, Op } = require('../../db');
 
-const getMovieByName = async (title) => {
+const getMovieByTitleService = async (title) => {
     try {
-        const character = await Movie.findOne({
+        const movie = await Movie.findOne({
             where: {
                 title: {
                     [Op.iLike]: `%${title}%`,
                 },
             },
-            include: {
-                model: Character,
-                through: {
-                    attributes: []
-                }
-            }
+            include: [Character, Genre]
         });
-        return character
+        return movie
     } catch (error) {
         return error
     };
 };
 
-module.exports = getMovieByName;
+module.exports = getMovieByTitleService;

@@ -2,6 +2,7 @@ const { Op, User } = require('../../db');
 
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const emailSender = require('../../libs/sendgrid.js');
 
 const register = async (req, res, next) => {
 
@@ -31,6 +32,8 @@ const register = async (req, res, next) => {
             password
         })
         const savedUser = await user.save()
+        const sent = await emailSender(savedUser.email);
+        console.log("esto es lo que se envio => ", sent);
         // create a token and send it to the header
         const token = jwt.sign(
             {
@@ -40,7 +43,7 @@ const register = async (req, res, next) => {
             },
             process.env.SECRET_TOKEN,
             { expiresIn: 60 * 60 }
-        )
+        );
         console.log(token)
         return res.header("authToken", token).status(200).json(user)
 

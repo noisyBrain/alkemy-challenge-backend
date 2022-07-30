@@ -1,10 +1,13 @@
 const getCharacterByNameService = require('../../services/character-services/getCharacterByName.service');
 
 const getCharacterByNameController = async (req, res, next) => {
+    const { name } = req.query;
     try {
-        if (req.query.name) {
-            const character = await getCharacterByNameService(req.query.name);
-            return res.status(200).json(character)
+        if (name) {
+            const characters = await getCharacterByNameService(name);
+            characters === null
+            ? res.status(404).json({ msg: "Characters not found" })
+            : res.status(200).json(characters)
         }
         next()
     } catch (error) {

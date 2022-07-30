@@ -8,12 +8,12 @@ const getCharacterByNameService = async (name) => {
                     [Op.iLike]: `%${name}%`,
                 },
             },
-            include: {
+            include: [{
                 model: Movie,
                 through: {
                     attributes: []
                 }
-            }
+            }]
         });
         return character
     } catch (error) {

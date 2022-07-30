@@ -4,7 +4,7 @@ const getAllMoviesController = async (req, res, next) => {
     try {
         if (req.query.title || req.query.genre || req.query.order) return next()
         const allMovies = await getAllMoviesService();
-        allMovies.length < 1
+        allMovies === null
         ? res.status(404).json({ msg: "Movies not found" })
         : res.status(200).json(allMovies);
     } catch (error) {

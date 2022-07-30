@@ -15,11 +15,8 @@ const postCharacterController = async (req, res, next) => {
             const movies = await Movie.findAll({
                 where: { title: req.body.movies }
             })
-            console.log("movies después del findAll() -> ", movies)
             newCharacter.addMovies(movies)
-            console.log("newChar antes de salir del if -> ", newCharacter)
         }
-        console.log("esto es newCharacter antes de la respnse -> ", newCharacter)
         res.status(201).json(newCharacter)
     } catch (error) {
         next(error)

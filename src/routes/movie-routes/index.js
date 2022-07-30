@@ -5,12 +5,12 @@ const getDetailMovieController = require('../../controllers/movie-controllers/ge
 const putMovieController = require('../../controllers/movie-controllers/putMovie.controller');
 const deleteMovieController = require('../../controllers/movie-controllers/deleteMovie.controller');
 const sortMoviesByCreateController = require('../../controllers/movie-controllers/sortMoviesByCreate.controller.js');
-const getMovieByNameController = require('../../controllers/movie-controllers/getMovieByName.controller.js');
+const getMovieByTitleController = require('../../controllers/movie-controllers/getMovieByTitle.controller.js');
 
 const router = require('express').Router()
 
 router.get('/:id', validateToken, getDetailMovieController);
-router.get('/', validateToken, getAllMoviesController, getMovieByNameController, sortMoviesByCreateController );
+router.get('/', getAllMoviesController, getMovieByTitleController, sortMoviesByCreateController );
 router.post('/', validateToken, postMovieController);
 router.put('/:id', validateToken, putMovieController);
 router.delete('/:id', validateToken, deleteMovieController);

@@ -4,9 +4,9 @@
 //          !...:!TVBBBRPFT||||||||||!!^^""'   ||||
 //          !.......:!?|||||!!^^""'            ||||
 //          !.........||||                     ||||
-//          !.........|||| console.log(        ||||
+//          !.........||||                     ||||
 //          !.........|||| "alkemy-challenge"  ||||
-//          !.........||||  )                  ||||
+//          !.........||||                     ||||
 //          !.........||||                     ||||
 //          !.........||||                     ||||
 //          `.........||||                    ,||||
@@ -32,11 +32,12 @@
 const PORT = process.env.PORT || 3001
 const { db } = require('./src/db.js')
 const server = require('./src/app.js');
+const seeder = require('./src/libs/seeds.js')
 
-
-db.sync({ force: false }).then(() => {
+db.sync({ force: true }).then(() => {
     console.log('Database connected')
     server.listen(PORT, () => {
+        seeder();
         console.log(`Listening at port ${PORT}`)
     })
 }).catch(error => console.error(error))

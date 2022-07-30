@@ -46,10 +46,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { Character, Genre, Movie, User } = sequelize.models
 
+// establezco un metodo para validar el el hash de la password 
 User.prototype.validatePassword = async function(password) {
   return await bcrypt.compare(password, this.password)
 }
 
+// relacionamos las tablas
 Character.belongsToMany(Movie, { through: "Character_Movie" })
 Movie.belongsToMany(Character, { through: "Character_Movie" })
 

@@ -13,7 +13,6 @@ const router = require("express").Router();
 router.get("/:id", validateToken, getDetailCharacterController);
 router.get(
   "/",
-  validateToken,
   getAllCharactersController,
   getCharacterByNameController,
   filterCharacterByAgeController,
