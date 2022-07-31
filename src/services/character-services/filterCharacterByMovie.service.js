@@ -1,14 +1,20 @@
 const { Movie } = require('../../db');
 
-const filterCharacterByAgeService = async (movieId) => {
+const filterCharacterByMovieService = async (movies) => {
     try {
-        const character = await Movie.findAll({
-            where: { movieId }
+        const movie = await Movie.findByPk(movies);
+        if (movie === null) {
+            return movie
+        };
+        const movie_characters = await movie.getCharacters({
+          attributes: {
+            exclude: ["id"]
+          },
         });
-        return character
+        return movie_characters;
     } catch (error) {
         return error
     };
 };
 
-module.exports = filterCharacterByAgeService;
+module.exports = filterCharacterByMovieService;

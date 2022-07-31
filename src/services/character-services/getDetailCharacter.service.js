@@ -3,12 +3,12 @@ const { Character, Movie } = require('../../db');
 const getDetailCharacterService = async (id) => {
     try {
         const characters = await Character.findByPk(id, {
-            include: {
+            include: [{
                 model: Movie,
                 through: { 
-                    attributtes:  ["title"]
+                    attributes: []
                 },
-            },
+            }],
         })
         return characters;
     } catch (error) {

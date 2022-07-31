@@ -13,11 +13,12 @@ const getAllCharactersService = async () => {
         })).map(e => e.toJSON())
         characters = characters?.map(character => ({
             name: character?.name,
-            image: character?.image
-        }))
+            image: character?.image,
+            movies: character?.movies?.map(t => t.title)
+        }));
         return characters;
     } catch (error) {
-        console.error(error)
+        return error;
     };
 };
 

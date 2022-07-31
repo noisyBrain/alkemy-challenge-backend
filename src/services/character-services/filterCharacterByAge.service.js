@@ -4,12 +4,7 @@ const filterCharacterByAgeService = async (age) => {
     try {
         const character = await Character.findAll({
             where: { age },
-            include: {
-                model: Movie,
-                through: {
-                    attributes: [],
-                },
-            },
+            include: [Movie]
         });
         return character
     } catch (error) {
