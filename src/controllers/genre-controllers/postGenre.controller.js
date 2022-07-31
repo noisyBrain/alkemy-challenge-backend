@@ -3,13 +3,12 @@ const postGenreService = require('../../services/genre-services/postGenre.servic
 const postGenreController = async (req, res, next) => {
     try {
         const newGenre = await postGenreService(req)
-        // comprobar si hay que validar null o length;
         newGenre === null
-        ? res.status(404).json({ msg: "Genre not found" })
-        : res.status(201).json({ newGenre });
+        ? res.status(400).json({ msg: "Could not create genre" })
+        : res.status(201).json({ msg: "Genre created" });
     } catch (error) {
         next(error)
     };
 };
 
-module.exports = postMovieController;
+module.exports = postGenreController;
