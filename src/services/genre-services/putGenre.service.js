@@ -1,20 +1,23 @@
 const { Genre } = require('../../db');
 
-const putMovieService = async (req) => {
-    const { image, name  } = req.body;
+const putGenreService = async (req) => {
+    const { image, name } = req.body;
     const { id } = req.params;
     try {
-        const [_, updatedGenre] =  await Genre.update({ 
-                image,
-                name,
-        }, { 
-            returning: true,
-            where: { id: id } 
-        });
-        return updatedMovie;
+        if (name || image) {
+            const findGenre = await Genre.findByPk(id);
+            if (findGenre) {
+                findGenre.update({
+                    image,
+                    name
+                });
+            };
+            return findGenre;
+        }
+        return null;
     } catch (error) {
         return error;
     };
 };
 
-module.exports = putMovieService
+module.exports = putGenreService;

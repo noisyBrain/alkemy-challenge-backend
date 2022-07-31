@@ -1,18 +1,20 @@
 const { Genre, Movie } = require('../../db');
 
-const getAllGenres = async () => {
+const getAllGenresService = async () => {
     try {
         let genres = (await Genre.findAll({
           include: {
             model: Movie,
-            attributes: ["title"]
+            through: {
+                attributes: []
+            }
           }
-        }));
+        }))
           .map(e => e.toJSON());
         genres = genres?.map(genre => ({
-            name: genre?.title,
+            name: genre?.name,
             image: genre?.image,
-            movies: genre?.movies,
+            movies: genre?.movies?.map(m => m.title),
         }));
         return genres;
     } catch (error) {
@@ -20,4 +22,4 @@ const getAllGenres = async () => {
     };
 };
 
-module.exports = getAllMoviesService;
+module.exports = getAllGenresService;

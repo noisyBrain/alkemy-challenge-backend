@@ -6,10 +6,10 @@ const deleteGenreService = async (req) => {
         const deletedGenre =  await Genre.destroy({
             where: { id }
         });
-        return deletedMovie;
+        return deletedGenre;
     } catch (error) {
         return error
     };
 };
 
-module.exports = deleteMovieService
+module.exports = deleteGenreService;
