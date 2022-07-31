@@ -1,15 +1,20 @@
 const { Character, Genre, Movie, User } = require('../db');
 
+// funcion para poblar la base de datos
+// cuando se levanta el servidor
 const seeder = async () => {
+  // buscamos peliculas en la db
   const movies = await Movie.findAll();    
+  // si no existen las creamos
   if (movies.length < 1) {
+    // primer pelicula
     await Movie.create(
       {
         title: "Shrek",
         image: "image",
         released: "2001-04-22",
         rating: 5,
-        genres: "Animated",
+        genres: [{ name: "Traditional" }],
         characters: [
           {
             name: "Shrek",
@@ -30,11 +35,12 @@ const seeder = async () => {
             image: "image",
             age: 34,
             weight: 134,
-            history: "Ogre's wife"
+            history: "Ogre's wife",
           },
         ]
       },
       { 
+        // incluimos los modelos asociados
         include: [
           {
             model: Character,
@@ -45,20 +51,21 @@ const seeder = async () => {
           {
             model: Genre,
             through: {
-              attributes: ["name"]
+              attributes: []
             }
           }
         ]
       }
     );
 
+    // segunda pelicula
     await Movie.create(
       {
         title: "Zootropolis",
         image: "image",
         released: "2016-03-17",
         rating: 4,
-        genre: "Animated",
+        genres: [{ name: "Animated" }],
         characters: [
           {
             name: "Judy Hopps",
@@ -84,6 +91,7 @@ const seeder = async () => {
         ]
       },
       { 
+        // incluimos los modelos asociados
         include: [
           {
             model: Character,
@@ -94,14 +102,16 @@ const seeder = async () => {
           {
             model: Genre,
             through: {
-              attributes: ["name"]
+              attributes: []
             }
           }
         ]
       }
     );
   };
+  // buscamos usarios en la db
   const users = await User.findAll(); 
+  // si no existen, creamos uno
   if (users.length < 1) {
     const newUser = await User.create({
       firstName: "Test",
@@ -110,13 +120,6 @@ const seeder = async () => {
       email: "testuser@gmail.com",
       password: "Userpassword!10"
     });
-  };
-  const genres = await Genre.findAll();
-  if (genres.length < 1) {
-    const newGenres = await Genre.bulkCreate([
-      { name: "Animated" },
-      { name: "Traditional" },
-    ]);
   };
 };
 
