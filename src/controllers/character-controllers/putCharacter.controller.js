@@ -1,20 +1,11 @@
-const { Character, Movie } = require('../../db');
+const putCharacterService = require('../../services/character-services/putCharacter.service.js');
 
 const putCharacterController = async (req, res, next) => {
-    const { name, weight, age, movies, history } = req.body;
-    const { id } = req.params;
     try {
-        const [_, updatedCharacter] =  await Character.update({ 
-                name,
-                weight,
-                age,
-                history,
-                // movies
-        }, { 
-            returning: true,
-            where: { id: id } 
-        });
-        res.status(200).json({ msg: "Character updated" });
+        const updatedCharacter = await putCharacterService(req)
+        updatedCharacter === null
+        ? res.status(400).json({ msg: "Character not found or not enough parameters" })
+        : res.status(200).json({ msg: "Character updated" });
     } catch (error) {
         next(error)
     };

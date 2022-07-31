@@ -1,18 +1,12 @@
-const { Character, Movie } = require('../../db');
+const deleteCharacterService = require('../../services/character-services/deleteCharacter.service.js');
 
 const deleteCharacterController = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const findCharacter = await Character.findByPk(id)
-        console.log(findCharacter)
-        // ? await Character.destroy({ where: { id } })
-        // : res.status(404).json({ msg: "Character not found" });
-        // const deletedCharacter = await Character.destroy({
-        //     where: { id }
-        // });
-        // console.log("deleted -> ",deletedCharacter)
-        // res.status(200).json({ msg: "Character deleted" });
-        res.status(200).json("ok");
+        const deletedCharacter = await deleteCharacterService(id);
+        deletedCharacter === 0
+        ? res.status(404).json({ msg: "Character not found" })
+        : res.status(200).json({ msg: "Character deleted" });
     } catch (error) {
         next(error)
     };

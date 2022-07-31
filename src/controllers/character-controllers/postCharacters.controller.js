@@ -1,23 +1,11 @@
-const { Character, Movie } = require('../../db');
+const postCharacterService = require('../../services/character-services/postCharacter.service.js');
 
 const postCharacterController = async (req, res, next) => {
     try {
-        const [newCharacter, created] = await Character.findOrCreate({
-            where: { name: req.body.name },
-            defaults: {
-                image: req.body.image,
-                age: req.body.age,
-                weight: req.body.weight,
-                history: req.body.history,
-            }
-        });
-        if (req.body.movies) {
-            const movies = await Movie.findAll({
-                where: { title: req.body.movies }
-            })
-            newCharacter.addMovies(movies)
-        }
-        res.status(201).json(newCharacter)
+        const createdCharacter = await postCharacterService(req)
+        createdCharacter === null
+        ? res.status(400).json({ msg: "Name and age, at least, are required" })
+        : res.status(201).json({ msg: "Character created" })
     } catch (error) {
         next(error)
     };
