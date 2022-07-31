@@ -2,8 +2,10 @@ const sortMoviesByCreateService = require('../../services/movie-services/sortMov
 
 const sortMoviesByCreateController = async (req, res, next) => {
   try {
-    const sortMovies = await sortMoviesByCreateService(req)
-    res.status(200).json(sortMovies);
+      const sortMovies = await sortMoviesByCreateService(req)
+      sortMovies === null
+      ? res.status(404).json({ msg: "Movies not found" })
+      : res.status(200).json(sortMovies);
   } catch (error) {
     next(error)    
   };

@@ -3,9 +3,11 @@ const getDetailMovieService = require('../../services/movie-services/getDetailMo
 const getDetailMovieController = async (req, res, next) => {
     const { id } = req.params;
     try {
+        // llamamos al servicio pasandole el id de la pelicula
         const movieDetail = await getDetailMovieService(id)
-        if (movieDetail.error) return res.status(404).json(movieDetail.error)
-        movieDetail.length < 1
+        // si devuelve null, la pelicula no existe
+        // de lo contrario, se devuelve la pelicula
+        movieDetail === null
         ? res.status(404).json({ msg: "Movie not found" })
         : res.status(200).json(movieDetail);
     } catch (error) {
