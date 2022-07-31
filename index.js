@@ -34,7 +34,7 @@ const { db } = require('./src/db.js')
 const server = require('./src/app.js');
 const seeder = require('./src/libs/seeds.js')
 
-db.sync({ force: true }).then(() => {
+db.sync({ force: false }).then(() => {
     console.log('Database connected')
     server.listen(PORT, () => {
         seeder();
