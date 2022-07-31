@@ -9,8 +9,8 @@ const router = require("express").Router();
 
 // PONER LA VALIDACION!!!!
 router.get("/", getAllGenresController);
-router.post("/", postGenreController);
-router.put("/:id", putGenreController);
-router.delete("/:id", deleteGenreController);
+router.post("/", validateToken, postGenreController);
+router.put("/:id", validateToken, putGenreController);
+router.delete("/:id", validateToken, deleteGenreController);
 
 module.exports = router;
