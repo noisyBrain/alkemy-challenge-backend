@@ -14,13 +14,14 @@ const router = require("express").Router();
 router.get("/:id", getDetailCharacterController);
 router.get(
   "/",
+  validateToken,
   getAllCharactersController,
   getCharacterByNameController,
   filterCharacterByAgeController,
   filterCharacterByMovieController
 );
-router.post("/", postCharacterController);
-router.put("/:id", putCharacterController);
-router.delete("/:id", deleteCharacterController);
+router.post("/", validateToken, postCharacterController);
+router.put("/:id", validateToken, putCharacterController);
+router.delete("/:id", validateToken, deleteCharacterController);
 
 module.exports = router;
