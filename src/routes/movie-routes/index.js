@@ -11,9 +11,8 @@ const filterMoviesByGenreController = require('../../controllers/movie-controlle
 const router = require('express').Router()
 
 // acordarse de agregar las validaciones en todas las rutas menos en el get All
-router.get('/:id', getDetailMovieController);
+router.get('/:id', validateToken, getDetailMovieController);
 router.get('/', 
-  validateToken,
   getAllMoviesController, 
   getMovieByTitleController, 
   filterMoviesByGenreController, 

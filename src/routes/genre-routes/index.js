@@ -7,7 +7,6 @@ const deleteGenreController  = require("../../controllers/genre-controllers/dele
 
 const router = require("express").Router();
 
-// PONER LA VALIDACION!!!!
 router.get("/", getAllGenresController);
 router.post("/", validateToken, postGenreController);
 router.put("/:id", validateToken, putGenreController);

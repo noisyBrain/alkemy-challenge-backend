@@ -10,11 +10,9 @@ const filterCharacterByMovieController = require("../../controllers/character-co
 
 const router = require("express").Router();
 
-// PONER LA VALIDACION!!!!
-router.get("/:id", getDetailCharacterController);
+router.get("/:id", validateToken, getDetailCharacterController);
 router.get(
   "/",
-  validateToken,
   getAllCharactersController,
   getCharacterByNameController,
   filterCharacterByAgeController,
